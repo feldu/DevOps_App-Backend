@@ -28,13 +28,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Доступ только для не зарегистрированных пользователей
                 .antMatchers("/auth/**").not().fullyAuthenticated()
                 //Доступ только для пользователей с ролью Модератор
-                .antMatchers("/moderator/**").hasRole("MODERATOR")
+                .antMatchers(HttpMethod.GET, "/moderator/**").hasRole("MODERATOR")
+                .antMatchers(HttpMethod.GET, "/review/approved/false").hasRole("MODERATOR")
+                .antMatchers(HttpMethod.DELETE, "/review/**").hasRole("MODERATOR")
+                .antMatchers(HttpMethod.PATCH, "/review/approval/**").hasRole("MODERATOR")
+
                 //Доступ только для пользователей с ролью Юзер
-                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
+                .antMatchers(HttpMethod.PATCH, "/user/**").hasRole("USER")
+
+                //Доступ и для Модератора и для Юзера
+                .antMatchers(HttpMethod.GET, "/review/authorName/**").hasAnyRole("MODERATOR", "USER")
+                .antMatchers(HttpMethod.POST, "/review/").hasAnyRole("MODERATOR", "USER")
                 //Доступ разрешен всем пользователей
                 .antMatchers(HttpMethod.GET, "/index*", "/static/**", "/*.js", "/*.json", "/*.ico").permitAll()
+                .antMatchers(HttpMethod.GET, "/review/approved/true").permitAll()
                 //Все остальные страницы требуют аутентификации
-//                .anyRequest().authenticated()
+                .anyRequest().authenticated()
                 .and()
                 //Настройка для входа в систему
                 .formLogin()
