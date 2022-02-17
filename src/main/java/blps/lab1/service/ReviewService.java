@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class ReviewService {
@@ -25,8 +27,16 @@ public class ReviewService {
         return reviewRepository.findById(id).orElse(null);
     }
 
+    public List<Review> findAllByApproved(boolean approved) {
+        return reviewRepository.findAllByApproved(approved);
+    }
+
+
     public void deleteReviewById(Long id) {
         reviewRepository.deleteById(id);
     }
 
+    public List<Review> findAllByAuthorName(String authorName) {
+        return reviewRepository.findAllByAuthorName(authorName);
+    }
 }

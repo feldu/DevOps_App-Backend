@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -62,6 +63,28 @@ public class ReviewController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("Непредвиденная ошибка", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/approved/{approved}")
+    public ResponseEntity<List<Review>> getReviewByApproval(@PathVariable Boolean approved) {
+        try {
+            List<Review> reviews = reviewService.findAllByApproved(approved);
+            return new ResponseEntity<>(reviews, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/authorName/{authorName}")
+    public ResponseEntity<List<Review>> getReviewByAuthorName(@PathVariable String authorName) {
+        try {
+            List<Review> reviews = reviewService.findAllByAuthorName(authorName);
+            return new ResponseEntity<>(reviews, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 }
