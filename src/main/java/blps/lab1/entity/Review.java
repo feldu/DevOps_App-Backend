@@ -52,4 +52,7 @@ public class Review {
     @NotNull
     @Min(value = 0)
     private Integer mileage;
+
+    @NotNull
+    private boolean approved = false;
 }

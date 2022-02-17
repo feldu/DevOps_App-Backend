@@ -21,4 +21,9 @@ public class ReviewService {
         log.debug("{} review by {} on saved in DB", review.getCarModel(), review.getAuthorName());
         return true;
     }
+
+    public Review findReviewById(Long id) {
+        return reviewRepository.findById(id).orElse(null);
+    }
+
 }
