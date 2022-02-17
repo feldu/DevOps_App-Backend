@@ -21,6 +21,9 @@ public class Review {
     private long id;
 
     @NotEmpty
+    private String authorName;
+
+    @NotEmpty
     private String carModel;
 
     @NotEmpty
