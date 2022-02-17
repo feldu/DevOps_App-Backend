@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -32,15 +33,20 @@ public class AuthController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody UserDTO dto) {
+    public ResponseEntity<String> signUp(@RequestBody User user) {
         try {
-            Role role = roleService.findByName(dto.getRole());
-            if (role == null)
-                return new ResponseEntity<>("Указанная роль не существует", HttpStatus.BAD_REQUEST);
-            User user = new User(dto.getUsername(), dto.getPassword());
-            user.setRoles(Collections.singleton(role));
+            Set<Role> roles = new HashSet<>();
+            for (Role i : user.getRoles()) {
+                Role role = roleService.findByName(i.getName());
+                if (role == null) {
+                    log.error("Роль {} для юзера {} не существует", i.getName(), user.getUsername());
+                    return new ResponseEntity<>("Указанная роль " + i.getName() + " не существует", HttpStatus.BAD_REQUEST);
+                }
+                roles.add(role);
+            }
+            user.setRoles(roles);
             log.debug("POST request to register user {}", user);
-            log.debug("User role {}", role);
+            log.debug("User role {}", roles);
             boolean isSaved = userService.saveUser(user);
             return isSaved ? new ResponseEntity<>("Пользователь зарегистрирован", HttpStatus.OK) :
                     new ResponseEntity<>("Пользователь с таким именем уже существует", HttpStatus.BAD_REQUEST);
