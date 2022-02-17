@@ -46,8 +46,8 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public void updateUser(User newUser) {
-        User user = userRepository.findByUsername(newUser.getUsername());
+    public void updateUser(Long id, User newUser) {
+        User user = userRepository.findById(id).orElse(null);
         if (user == null) {
             log.debug("User {} not found in DB", newUser.getUsername());
             throw new UsernameNotFoundException("User not found in DB");

@@ -23,7 +23,7 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<String> addReview(@RequestBody Review review) {
         try {
             reviewService.saveReview(review);
@@ -34,7 +34,7 @@ public class ReviewController {
         }
     }
 
-    @PostMapping("/changeApproval/{id}")
+    @PatchMapping("/approval/{id}")
     public ResponseEntity<String> changeApproval(@PathVariable(name = "id") Long id,
                                                  @RequestBody Map<String, Boolean> payload) {
         try {
@@ -55,8 +55,8 @@ public class ReviewController {
         }
     }
 
-    @PostMapping("/delete/{id}")
-    public ResponseEntity<String> addReview(@PathVariable(name = "id") Long id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteReview(@PathVariable(name = "id") Long id) {
         try {
             reviewService.deleteReviewById(id);
             return new ResponseEntity<>("Отзыв удален", HttpStatus.OK);
@@ -76,7 +76,6 @@ public class ReviewController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
-
     @GetMapping("/authorName/{authorName}")
     public ResponseEntity<List<Review>> getReviewByAuthorName(@PathVariable String authorName) {
         try {

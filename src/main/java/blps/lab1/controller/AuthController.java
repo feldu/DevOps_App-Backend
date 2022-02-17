@@ -5,7 +5,6 @@ import blps.lab1.entity.Role;
 import blps.lab1.entity.User;
 import blps.lab1.service.RoleService;
 import blps.lab1.service.UserService;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,12 +53,5 @@ public class AuthController {
             log.error("Unexpected error {}", e.getMessage());
             return new ResponseEntity<>("Непредвиденная ошибка", HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @Data
-    private static class UserDTO {
-        private String username;
-        private String password;
-        private String role;
     }
 }
