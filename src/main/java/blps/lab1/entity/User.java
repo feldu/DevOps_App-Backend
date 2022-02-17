@@ -74,11 +74,6 @@ public class User implements UserDetails {
                             nullable = false)})
     private Set<Role> roles = new HashSet<>();
 
-    public User(@NotEmpty @Size(min = 4, max = 20) String username, @NotEmpty @Size(min = 4) String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     @Override
     public String getUsername() {
         return username;
