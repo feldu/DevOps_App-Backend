@@ -16,14 +16,17 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    public boolean saveReview(Review review) {
+    public void saveReview(Review review) {
         reviewRepository.save(review);
         log.debug("{} review by {} on saved in DB", review.getCarModel(), review.getAuthorName());
-        return true;
     }
 
     public Review findReviewById(Long id) {
         return reviewRepository.findById(id).orElse(null);
+    }
+
+    public void deleteReviewById(Long id) {
+        reviewRepository.deleteById(id);
     }
 
 }

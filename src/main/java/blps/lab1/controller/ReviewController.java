@@ -53,4 +53,15 @@ public class ReviewController {
             return new ResponseEntity<>("Непредвиденная ошибка", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<String> addReview(@PathVariable(name = "id") Long id) {
+        try {
+            reviewService.deleteReviewById(id);
+            return new ResponseEntity<>("Отзыв удален", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Непредвиденная ошибка", HttpStatus.BAD_REQUEST);
+        }
+    }
 }
