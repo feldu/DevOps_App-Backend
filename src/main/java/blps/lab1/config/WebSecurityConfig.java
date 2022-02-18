@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //Доступ только для пользователей с ролью Юзер
                 .antMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
-                .antMatchers(HttpMethod.PATCH, "/user/**").hasRole("USER")
+                .antMatchers(HttpMethod.PUT, "/user/**").hasRole("USER")
 
                 //Доступ и для Модератора и для Юзера
                 .antMatchers(HttpMethod.GET, "/review/authorName/**").hasAnyRole("MODERATOR", "USER")

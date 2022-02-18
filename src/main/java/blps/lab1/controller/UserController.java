@@ -20,7 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateUser(@RequestBody User user,
                                              @PathVariable Long id) {
         try {
