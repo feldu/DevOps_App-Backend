@@ -1,5 +1,6 @@
 package blps.lab1.controller;
 
+import blps.lab1.dto.ReviewDTO;
 import blps.lab1.entity.Review;
 import blps.lab1.service.ReviewService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,66 +25,43 @@ public class ReviewController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<String> addReview(@RequestBody Review review) {
-        try {
-            reviewService.saveReview(review);
-            return new ResponseEntity<>("Отзыв сохранен", HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("Непредвиденная ошибка", HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<String> addReview(@RequestBody ReviewDTO reviewDTO) {
+        Review review = new Review(reviewDTO);
+        reviewService.saveReview(review);
+        return new ResponseEntity<>("Отзыв сохранен", HttpStatus.OK);
     }
 
     @PatchMapping("/approval/{id}")
     public ResponseEntity<String> changeApproval(@PathVariable(name = "id") Long id,
                                                  @RequestBody Map<String, Boolean> payload) {
-        try {
-            Boolean approved = payload.get("approved");
-            if (approved == null)
-                return new ResponseEntity<>("Не указано значение approved", HttpStatus.BAD_REQUEST);
-            Review review = reviewService.findReviewById(id);
-            if (review == null)
-                return new ResponseEntity<>("Отзыв с указанным id не существует", HttpStatus.BAD_REQUEST);
-            if (review.isApproved() == approved)
-                return new ResponseEntity<>("Отзыв с указанным id уже имеет значение " + approved, HttpStatus.BAD_REQUEST);
-            review.setApproved(approved);
-            reviewService.saveReview(review);
-            return new ResponseEntity<>("Подтверждение отзыва изменено", HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("Непредвиденная ошибка", HttpStatus.BAD_REQUEST);
-        }
+        Boolean approved = payload.get("approved");
+        if (approved == null)
+            return new ResponseEntity<>("Не указано значение approved", HttpStatus.BAD_REQUEST);
+        Review review = reviewService.findReviewById(id);
+        if (review == null)
+            return new ResponseEntity<>("Отзыв с указанным id не существует", HttpStatus.BAD_REQUEST);
+        if (review.isApproved() == approved)
+            return new ResponseEntity<>("Отзыв с указанным id уже имеет значение " + approved, HttpStatus.BAD_REQUEST);
+        review.setApproved(approved);
+        reviewService.saveReview(review);
+        return new ResponseEntity<>("Подтверждение отзыва изменено", HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteReview(@PathVariable(name = "id") Long id) {
-        try {
-            reviewService.deleteReviewById(id);
-            return new ResponseEntity<>("Отзыв удален", HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("Непредвиденная ошибка", HttpStatus.BAD_REQUEST);
-        }
+        reviewService.deleteReviewById(id);
+        return new ResponseEntity<>("Отзыв удален", HttpStatus.OK);
     }
 
     @GetMapping("/approved/{approved}")
     public ResponseEntity<List<Review>> getReviewByApproval(@PathVariable Boolean approved) {
-        try {
-            List<Review> reviews = reviewService.findAllByApproved(approved);
-            return new ResponseEntity<>(reviews, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+        List<Review> reviews = reviewService.findAllByApproved(approved);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
+
     @GetMapping("/authorName/{authorName}")
     public ResponseEntity<List<Review>> getReviewByAuthorName(@PathVariable String authorName) {
-        try {
-            List<Review> reviews = reviewService.findAllByAuthorName(authorName);
-            return new ResponseEntity<>(reviews, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+        List<Review> reviews = reviewService.findAllByAuthorName(authorName);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 }

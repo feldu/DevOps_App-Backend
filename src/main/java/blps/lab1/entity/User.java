@@ -1,6 +1,7 @@
 package blps.lab1.entity;
 
 
+import blps.lab1.dto.UserUpdateDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -73,6 +74,24 @@ public class User implements UserDetails {
                     @JoinColumn(name = "role_id", referencedColumnName = "id",
                             nullable = false)})
     private Set<Role> roles = new HashSet<>();
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(UserUpdateDTO userUpdateDTO) {
+        this.username = userUpdateDTO.getUsername();
+        this.password = userUpdateDTO.getPassword();
+        this.email = userUpdateDTO.getEmail();
+        this.name = userUpdateDTO.getName();
+        this.city = userUpdateDTO.getCity();
+        this.startDrivingYear = userUpdateDTO.getStartDrivingYear();
+        this.birthDate = userUpdateDTO.getBirthDate();
+        this.job = userUpdateDTO.getJob();
+        this.hobby = userUpdateDTO.getHobby();
+        this.roles = userUpdateDTO.getRoles();
+    }
 
     @Override
     public String getUsername() {

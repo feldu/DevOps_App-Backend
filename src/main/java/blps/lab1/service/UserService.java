@@ -25,18 +25,14 @@ public class UserService implements UserDetailsService {
 
     @Override
     @Transactional
-    public User loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            log.debug("User {} not found in DB", username);
-            throw new UsernameNotFoundException("User not found in DB");
-        }
+    public User loadUserByUsername(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found in DB"));
         log.debug("User {} found in DB", username);
         return user;
     }
 
     public boolean saveUser(User user) {
-        if (userRepository.findByUsername(user.getUsername()) != null) {
+        if (userRepository.findByUsername(user.getUsername()).orElse(null) != null) {
             log.debug("User {} already exists in DB", user.getUsername());
             return false;
         }
@@ -47,11 +43,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void updateUser(Long id, User newUser) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            log.debug("User {} not found in DB", newUser.getUsername());
-            throw new UsernameNotFoundException("User not found in DB");
-        }
+        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found in DB"));
         user.setEmail(newUser.getEmail());
         user.setName(newUser.getName());
         user.setCity(newUser.getCity());

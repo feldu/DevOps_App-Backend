@@ -1,5 +1,6 @@
 package blps.lab1.entity;
 
+import blps.lab1.dto.ReviewDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -55,4 +56,19 @@ public class Review {
 
     @NotNull
     private boolean approved = false;
+
+    public Review(ReviewDTO reviewDTO) {
+        this.authorName = reviewDTO.getAuthorName();
+        this.carModel = reviewDTO.getCarModel();
+        this.modification = reviewDTO.getModification();
+        this.manufactureYear = reviewDTO.getManufactureYear();
+        this.reviewText = reviewDTO.getReviewText();
+        this.pros = reviewDTO.getPros();
+        this.cons = reviewDTO.getCons();
+        this.advice = reviewDTO.getAdvice();
+        this.ownershipDate = reviewDTO.getOwnershipDate();
+        this.mileage = reviewDTO.getMileage();
+        this.approved = reviewDTO.isApproved();
+    }
+
 }

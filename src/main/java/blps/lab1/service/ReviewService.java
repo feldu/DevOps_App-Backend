@@ -1,6 +1,7 @@
 package blps.lab1.service;
 
 import blps.lab1.entity.Review;
+import blps.lab1.exception.DataNotFoundException;
 import blps.lab1.repository.ReviewRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ReviewService {
     }
 
     public Review findReviewById(Long id) {
-        return reviewRepository.findById(id).orElse(null);
+        return reviewRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Review not found"));
     }
 
     public List<Review> findAllByApproved(boolean approved) {
