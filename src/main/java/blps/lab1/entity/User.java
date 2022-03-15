@@ -1,7 +1,6 @@
 package blps.lab1.entity;
 
 
-import blps.lab1.dto.UserUpdateDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -66,31 +65,12 @@ public class User implements UserDetails {
     private String hobby;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = {
-                    @JoinColumn(name = "user_id", referencedColumnName = "id",
-                            nullable = false)},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "role_id", referencedColumnName = "id",
-                            nullable = false)})
+    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)})
     private Set<Role> roles = new HashSet<>();
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public User(UserUpdateDTO userUpdateDTO) {
-        this.username = userUpdateDTO.getUsername();
-        this.password = userUpdateDTO.getPassword();
-        this.email = userUpdateDTO.getEmail();
-        this.name = userUpdateDTO.getName();
-        this.city = userUpdateDTO.getCity();
-        this.startDrivingYear = userUpdateDTO.getStartDrivingYear();
-        this.birthDate = userUpdateDTO.getBirthDate();
-        this.job = userUpdateDTO.getJob();
-        this.hobby = userUpdateDTO.getHobby();
-        this.roles = userUpdateDTO.getRoles();
     }
 
     @Override

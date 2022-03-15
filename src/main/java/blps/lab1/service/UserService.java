@@ -41,16 +41,4 @@ public class UserService implements UserDetailsService {
         log.debug("User {} saved in DB", user.getUsername());
         return true;
     }
-
-    public void updateUser(Long id, User newUser) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found in DB"));
-        user.setEmail(newUser.getEmail());
-        user.setName(newUser.getName());
-        user.setCity(newUser.getCity());
-        user.setStartDrivingYear(newUser.getStartDrivingYear());
-        user.setBirthDate(newUser.getBirthDate());
-        user.setJob(newUser.getJob());
-        user.setHobby(newUser.getHobby());
-        userRepository.save(user);
-    }
 }
