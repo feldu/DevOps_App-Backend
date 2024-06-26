@@ -68,9 +68,10 @@ public class User implements UserDetails {
     @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)})
     private Set<Role> roles = new HashSet<>();
 
-    public User(String username, String password) {
+    public User(String username, String password, String name) {
         this.username = username;
         this.password = password;
+        this.name = name;
     }
 
     @Override

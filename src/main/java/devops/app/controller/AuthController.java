@@ -35,7 +35,7 @@ public class AuthController {
     @SneakyThrows
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody UserSignUpDTO userSignUpDTO) {
-        User user = new User(userSignUpDTO.getUsername(), userSignUpDTO.getPassword());
+        User user = new User(userSignUpDTO.getUsername(), userSignUpDTO.getPassword(), userSignUpDTO.getName());
         Set<Role> roles = new HashSet<>();
         for (String roleName : userSignUpDTO.getRoleNames()) {
             Role role = roleService.findByName(roleName);

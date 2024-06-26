@@ -52,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/review/approved/true").permitAll()
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
+//                .anyRequest().permitAll()
                 .and()
                 //Настройка для входа в систему
                 .formLogin()
