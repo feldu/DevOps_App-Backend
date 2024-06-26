@@ -1,11 +1,11 @@
-package blps.lab1.controller;
+package devops.app.controller;
 
 
-import blps.lab1.dto.UserSignUpDTO;
-import blps.lab1.entity.Role;
-import blps.lab1.entity.User;
-import blps.lab1.service.RoleService;
-import blps.lab1.service.UserService;
+import devops.app.dto.UserSignUpDTO;
+import devops.app.entity.Role;
+import devops.app.entity.User;
+import devops.app.service.RoleService;
+import devops.app.service.UserService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

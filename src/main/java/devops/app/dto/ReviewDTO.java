@@ -1,4 +1,4 @@
-package blps.lab1.dto;
+package devops.app.dto;
 
 import lombok.Data;
 

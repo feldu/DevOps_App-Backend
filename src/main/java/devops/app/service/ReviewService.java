@@ -1,8 +1,8 @@
-package blps.lab1.service;
+package devops.app.service;
 
-import blps.lab1.entity.Review;
-import blps.lab1.exception.DataNotFoundException;
-import blps.lab1.repository.ReviewRepository;
+import devops.app.entity.Review;
+import devops.app.exception.DataNotFoundException;
+import devops.app.repository.ReviewRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

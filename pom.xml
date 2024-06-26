@@ -8,13 +8,13 @@
         <version>2.6.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>blps</groupId>
-    <artifactId>lab1</artifactId>
+    <groupId>devops</groupId>
+    <artifactId>app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>BLPS_Lab1</name>
-    <description>BLPS lab 1</description>
+    <name>DevOps_App</name>
+    <description>DevOps App</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>

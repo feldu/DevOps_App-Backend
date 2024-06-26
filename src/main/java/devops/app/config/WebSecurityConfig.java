@@ -1,7 +1,7 @@
-package blps.lab1.config;
+package devops.app.config;
 
-import blps.lab1.entity.User;
-import lombok.extern.slf4j.Slf4j;
+import devops.app.components.LoginSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,10 +10,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@Slf4j
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    final private LoginSuccessHandler loginSuccessHandler;
+
+    @Autowired
+    public WebSecurityConfig(LoginSuccessHandler loginSuccessHandler) {
+        this.loginSuccessHandler = loginSuccessHandler;
+    }
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -50,20 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/auth/signin")
                 .loginProcessingUrl("/auth/signin")
-                .successHandler((request, response, authentication) -> {
-                    User user = (User) authentication.getPrincipal();
-                    String roleName = "NO ROLES";
-                    String redirectURL = request.getContextPath();
-                    if (user.hasRole("ROLE_MODERATOR")) {
-                        roleName = "MODERATOR";
-                        redirectURL = "/moderator";
-                    } else if (user.hasRole("ROLE_USER")) {
-                        roleName = "USER";
-                        redirectURL = "/user";
-                    }
-                    log.debug("user {} has role {}", user, roleName);
-                    response.sendRedirect(redirectURL);
-                })
+                .successHandler(loginSuccessHandler)
                 .permitAll()
                 .and()
                 .logout()

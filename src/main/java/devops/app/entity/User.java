@@ -1,4 +1,4 @@
-package blps.lab1.entity;
+package devops.app.entity;
 
 
 import lombok.Data;

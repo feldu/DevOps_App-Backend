@@ -1,7 +1,7 @@
-package blps.lab1.service;
+package devops.app.service;
 
-import blps.lab1.entity.User;
-import blps.lab1.repository.UserRepository;
+import devops.app.entity.User;
+import devops.app.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;

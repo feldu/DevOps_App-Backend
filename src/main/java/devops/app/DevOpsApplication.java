@@ -1,13 +1,13 @@
-package blps.lab1;
+package devops.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BlpsLab1Application {
+public class DevOpsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BlpsLab1Application.class, args);
+        SpringApplication.run(DevOpsApplication.class, args);
     }
 
 }

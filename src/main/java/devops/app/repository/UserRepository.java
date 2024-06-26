@@ -1,7 +1,7 @@
-package blps.lab1.repository;
+package devops.app.repository;
 
 
-import blps.lab1.entity.User;
+import devops.app.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
