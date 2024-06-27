@@ -18,7 +18,11 @@ default:
 build:
   stage: build
   script:
+    - echo Build job started
     - mvn $MAVEN_CLI_OPTS clean package
+    - echo ls -l target
+    - ls -l target
+    - echo Build job completed
   artifacts:
     paths:
       - target/*.jar
@@ -30,10 +34,13 @@ build:
 test:
   stage: test
   script:
+    - echo Test job started
     - mvn $MAVEN_CLI_OPTS test
+    - echo Test job completed
   needs:
     [ "build" ]
   only:
     - master
+  when: manual
   tags:
     - itmolabs
