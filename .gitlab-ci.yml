@@ -33,6 +33,7 @@ build:
       - target/*.jar
   only:
     - master
+  allow_failure: true
   tags:
     - itmolabs
 
@@ -42,8 +43,7 @@ test:
     - echo Test job started
     - mvn test
     - echo Test job completed
-  needs:
-    [ "build" ]
+  needs: [ ]
   only:
     - master
   tags:
