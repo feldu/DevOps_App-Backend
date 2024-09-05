@@ -4,6 +4,10 @@ stages:
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: 14881488
+  POSTGRES_HOST_AUTH_METHOD: trust
 
 default:
   image: maven:3.9.6-amazoncorretto-11
@@ -13,6 +17,8 @@ default:
     paths:
       - .m2/repository/
       - target/
+  services:
+    - postgres
 
 build:
   stage: build
