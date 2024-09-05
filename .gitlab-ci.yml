@@ -3,7 +3,6 @@ stages:
   - test
 
 variables:
-  MAVEN_CLI_OPTS: "-DskipTests"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
 
 default:
@@ -19,7 +18,7 @@ build:
   stage: build
   script:
     - echo Build job started
-    - mvn $MAVEN_CLI_OPTS clean package
+    - mvn -DskipTests clean package
     - echo ls -l target
     - ls -l target
     - echo Build job completed
@@ -35,12 +34,11 @@ test:
   stage: test
   script:
     - echo Test job started
-    - mvn $MAVEN_CLI_OPTS test
+    - mvn test
     - echo Test job completed
   needs:
     [ "build" ]
   only:
     - master
-  when: manual
   tags:
     - itmolabs
