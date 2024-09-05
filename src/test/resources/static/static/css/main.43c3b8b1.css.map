@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.43c3b8b1.css","mappings":"AAAA,0BAEI,qBAAsB,CADtB,WAEJ,CAEA,KACI,iBACJ","sources":["App.css"],"sourcesContent":["html, body, #root, #root > div {\n    height: 100%;\n    box-sizing: border-box;\n}\n\n.App {\n    text-align: center;\n}\n\n"],"names":[],"sourceRoot":""}
