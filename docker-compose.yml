@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  backend:
+    container_name: backend
+    image: cr.yandex/crp92ekqp3bdhvvp7ffm/backend-image:latest
+    ports:
+      - "31510:31510"
+
+  frontend:
+    image: cr.yandex/crp92ekqp3bdhvvp7ffm/frontend-image:latest
+    container_name: frontend
+    ports:
+      - '8080:8080'
