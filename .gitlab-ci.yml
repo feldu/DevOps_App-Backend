@@ -72,6 +72,8 @@ sonarqube-check:
     - lab4
   needs:
     [ ]
+  tags:
+    - itmolabs
 
 push:
   stage: push
@@ -89,6 +91,8 @@ push:
     - lab4
   needs:
     [ "build" ]
+  tags:
+    - itmolabs
 
 deploy:
   stage: deploy
@@ -101,3 +105,5 @@ deploy:
     [ "push" ]
   only:
     - lab4
+  tags:
+    - itmolabs
