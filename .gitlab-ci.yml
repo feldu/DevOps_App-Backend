@@ -83,8 +83,8 @@ push:
     - /kaniko/executor
       --context "${CI_PROJECT_DIR}/devops_app-backend-master"
       --dockerfile "${CI_PROJECT_DIR}/devops_app-backend-master/Dockerfile"
-      --destination "cr.yandex/${REGISTRY_ID}/backend-devops_app-backend-master:${CI_COMMIT_SHORT_SHA}"
-      --destination "cr.yandex/${REGISTRY_ID}/backend-devops_app-backend-master:latest"
+      --destination "cr.yandex/crp92ekqp3bdhvvp7ffm/backend-image:${CI_COMMIT_SHORT_SHA}"
+      --destination "cr.yandex/crp92ekqp3bdhvvp7ffm/backend-image:latest"
   only:
     - lab4
   needs:
