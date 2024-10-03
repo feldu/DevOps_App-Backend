@@ -68,8 +68,6 @@ sonarqube-check:
   script:
     - mvn verify sonar:sonar -Dmaven.test.skip -Dsonar.ws.timeout=300
   allow_failure: true
-  only:
-    - lab4
   needs:
     [ ]
   tags:
