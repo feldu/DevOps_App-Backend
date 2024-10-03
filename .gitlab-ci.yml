@@ -79,12 +79,12 @@ push:
     name: gcr.io/kaniko-project/executor:v1.14.0-debug
     entrypoint: [ "" ]
   script:
-    - cd DevOps_App-Backend
+    - cd devops_app-backend-master
     - /kaniko/executor
-      --context "${CI_PROJECT_DIR}/DevOps_App-Backend"
-      --dockerfile "${CI_PROJECT_DIR}/DevOps_App-Backend/Dockerfile"
-      --destination "cr.yandex/${REGISTRY_ID}/backend-DevOps_App-Backend:${CI_COMMIT_SHORT_SHA}"
-      --destination "cr.yandex/${REGISTRY_ID}/backend-DevOps_App-Backend:latest"
+      --context "${CI_PROJECT_DIR}/devops_app-backend-master"
+      --dockerfile "${CI_PROJECT_DIR}/devops_app-backend-master/Dockerfile"
+      --destination "cr.yandex/${REGISTRY_ID}/backend-devops_app-backend-master:${CI_COMMIT_SHORT_SHA}"
+      --destination "cr.yandex/${REGISTRY_ID}/backend-devops_app-backend-master:latest"
   only:
     - lab4
   needs:
@@ -96,7 +96,7 @@ deploy:
   script:
     - export K8S_BASE_URL=${K8S_BASE_URL} && export K8S_CA_DATA=${K8S_CA_DATA} && export K8S_USER_TOKEN=${K8S_USER_TOKEN}
     - cd deployment
-    - kubectl rollout restart deployment DevOps_App-Backend -n default
+    - kubectl rollout restart deployment devops_app-backend-master -n default
   needs:
     [ "push" ]
   only:
