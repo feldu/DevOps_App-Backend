@@ -1,6 +1,9 @@
 stages:
   - build
   - test
+  - sonarqube-check
+  - push
+  - deploy
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
@@ -8,6 +11,9 @@ variables:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: 14881488
   POSTGRES_HOST_AUTH_METHOD: trust
+  SONAR_HOST_URL: "${SONAR_HOST_URL}"
+  SONAR_TOKEN: "${SONARQUBE_TOKEN}"
+
 
 default:
   image: maven:3.9.6-amazoncorretto-11
@@ -32,7 +38,7 @@ build:
     paths:
       - target/*.jar
   only:
-    - master
+    - lab4
   allow_failure: true
   tags:
     - itmolabs
@@ -43,8 +49,55 @@ test:
     - echo Test job started
     - mvn test
     - echo Test job completed
+  allow_failure: true
   needs: [ ]
   only:
-    - master
+    - lab4
   tags:
     - itmolabs
+
+sonarqube-check:
+  stage: sonarqube-check
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    GIT_DEPTH: "0"
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - mvn verify sonar:sonar -Dmaven.test.skip -Dsonar.ws.timeout=300
+  allow_failure: true
+  only:
+    - lab4
+  needs:
+    [ ]
+
+push:
+  stage: push
+  image:
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [ "" ]
+  script:
+    - cd DevOps_App-Backend
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}/DevOps_App-Backend"
+      --dockerfile "${CI_PROJECT_DIR}/DevOps_App-Backend/Dockerfile"
+      --destination "cr.yandex/${REGISTRY_ID}/backend-DevOps_App-Backend:${CI_COMMIT_SHORT_SHA}"
+      --destination "cr.yandex/${REGISTRY_ID}/backend-DevOps_App-Backend:latest"
+  only:
+    - lab4
+  needs:
+    [ "build" ]
+
+deploy:
+  stage: deploy
+  image: alpine/k8s:1.29.4
+  script:
+    - export K8S_BASE_URL=${K8S_BASE_URL} && export K8S_CA_DATA=${K8S_CA_DATA} && export K8S_USER_TOKEN=${K8S_USER_TOKEN}
+    - cd deployment
+    - kubectl rollout restart deployment DevOps_App-Backend -n default
+  needs:
+    [ "push" ]
+  only:
+    - lab4
